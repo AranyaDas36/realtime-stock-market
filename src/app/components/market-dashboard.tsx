@@ -64,8 +64,8 @@ export default function MarketDashboard() {
     <div className="max-w-7xl mx-auto">
       <h1 className="text-2xl font-medium text-gray-400 mb-8">Markets</h1>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-gray-900 rounded-lg p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-gray-950">
+        <div className="bg-gray-950 rounded-lg p-6">
           <MarketOverview
             data={marketData}
             isLoading={isLoading}
@@ -74,7 +74,7 @@ export default function MarketDashboard() {
           />
         </div>
 
-        <div className="bg-gray-900 rounded-lg p-6">
+        <div className="bg-gray-950 rounded-lg p-6">
           <div className="flex items-center mb-4">
             <h2 className="text-xl font-medium">{selectedAssetData?.fullName || selectedAsset}</h2>
             <ChevronRight className="ml-2 h-5 w-5 text-gray-500" />
