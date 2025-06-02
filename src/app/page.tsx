@@ -20,7 +20,6 @@ export default function Home() {
                 <div className="text-green-500 pl-2 pr-4 bold">bullish</div>
               </div>
 
-                hey there
             </div>
             <div>
               <SectorPerformance />
