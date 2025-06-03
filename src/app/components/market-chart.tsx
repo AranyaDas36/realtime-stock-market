@@ -1,12 +1,19 @@
 "use client"
 
 import { useState } from "react"
-import { Line, LineChart, ResponsiveContainer, Tooltip } from "recharts"
+import { Line, LineChart, ResponsiveContainer, Tooltip, TooltipProps } from "recharts"
 import { cn } from "@/lib/utils"
 import type { TimeRange } from "@/lib/types"
+import type { ValueType, NameType } from "recharts/types/component/DefaultTooltipContent"
+
+interface MarketDataPoint {
+  date: string
+  price: number
+  movingAverage?: number
+}
 
 interface MarketChartProps {
-  data: any[]
+  data: MarketDataPoint[]
   timeRange: TimeRange
   onTimeRangeChange: (range: TimeRange) => void
 }
@@ -14,16 +21,17 @@ interface MarketChartProps {
 const timeRanges: TimeRange[] = ["1D", "1W", "1M", "3M", "1Y", "All"]
 
 export default function MarketChart({ data, timeRange, onTimeRangeChange }: MarketChartProps) {
-  const [showMovingAverage, setShowMovingAverage] = useState(true)
+  const [showMovingAverage] = useState(true) // Removed setShowMovingAverage since unused
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  // Use Recharts TooltipProps generic type for type safety
+  const CustomTooltip = ({ active, payload }: TooltipProps<ValueType, NameType>) => {
     if (active && payload && payload.length) {
       return (
         <div className="bg-gray-800 p-2 border border-gray-700 rounded shadow-lg">
           <p className="text-sm">{`${payload[0].payload.date}`}</p>
-          <p className="text-sm text-white">{`Price: ${payload[0].value.toFixed(2)}`}</p>
+          <p className="text-sm text-white">{`Price: ${payload[0].value?.toFixed(2)}`}</p>
           {showMovingAverage && payload[1] && (
-            <p className="text-sm text-amber-500">{`MA: ${payload[1].value.toFixed(2)}`}</p>
+            <p className="text-sm text-amber-500">{`MA: ${payload[1].value?.toFixed(2)}`}</p>
           )}
         </div>
       )

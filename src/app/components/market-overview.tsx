@@ -1,8 +1,15 @@
 "use client"
 import { cn } from "@/lib/utils"
 
+interface MarketDataItem {
+  name: string
+  value: number
+  change: number
+  changePercent: number
+}
+
 interface MarketOverviewProps {
-  data: any[]
+  data: MarketDataItem[]
   isLoading: boolean
   onAssetSelect: (assetName: string) => void
   selectedAsset: string
@@ -36,19 +43,19 @@ export default function MarketOverview({ data, isLoading, onAssetSelect, selecte
           onClick={() => onAssetSelect(item.name)}
         >
           <div className="font-medium w-32">{item.name}</div>
-          <div className="text-right w-24">{item.value.toFixed(2)}</div>
-          <div className={cn("text-right w-20", item.change >= 0 ? "text-green-500" : "text-red-500")}>
-            {item.change >= 0 ? "+" : ""}
-            {item.change.toFixed(2)}
+          <div className="text-right w-24">{item.value?.toFixed(2) ?? "N/A"}</div>
+          <div className={cn("text-right w-20", (item.change ?? 0) >= 0 ? "text-green-500" : "text-red-500")}>
+            {(item.change ?? 0) >= 0 ? "+" : ""}
+            {(item.change ?? 0).toFixed(2)}
           </div>
           <div
             className={cn(
               "text-right w-20 rounded px-2 py-1",
-              item.changePercent >= 0 ? "bg-green-900/50 text-green-500" : "bg-red-900/50 text-red-500",
+              (item.changePercent ?? 0) >= 0 ? "bg-green-900/50 text-green-500" : "bg-red-900/50 text-red-500",
             )}
           >
-            {item.changePercent >= 0 ? "+" : ""}
-            {item.changePercent.toFixed(2)}%
+            {(item.changePercent ?? 0) >= 0 ? "+" : ""}
+            {(item.changePercent ?? 0).toFixed(2)}%
           </div>
         </div>
       ))}
